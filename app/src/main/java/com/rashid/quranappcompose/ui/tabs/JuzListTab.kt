@@ -37,7 +37,7 @@ object JuzListTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(SurahListScreen()) { navigator ->
+        Navigator(JuzListScreen()) { navigator ->
             SlideTransition(navigator = navigator)
         }
     }

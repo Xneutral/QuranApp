@@ -1,5 +1,6 @@
 package com.rashid.quranappcompose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import cafe.adriel.voyager.navigator.Navigator
@@ -23,6 +25,7 @@ import com.rashid.quranappcompose.data.viewmodel.QuranViewModel
 import com.rashid.quranappcompose.ui.screens.SurahListScreen
 import com.rashid.quranappcompose.ui.tabs.JuzListTab
 import com.rashid.quranappcompose.ui.tabs.SurahListTab
+import com.rashid.quranappcompose.ui.theme.COLOR_PRIMARY_LIGHT
 
 data class ApplicationFonts(
     val englishFont: FontFamily? = null,
@@ -63,7 +66,9 @@ fun App(modifier: Modifier = Modifier) {
     TabNavigator(SurahListTab) {
         Scaffold(
             bottomBar = {
-                BottomNavigation {
+                BottomNavigation (
+                    backgroundColor = COLOR_PRIMARY_LIGHT
+                ){
                     TabNavigationItem(SurahListTab)
                     TabNavigationItem(JuzListTab)
                 }

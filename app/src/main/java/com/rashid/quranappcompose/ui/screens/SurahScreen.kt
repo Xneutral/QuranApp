@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.rashid.quranappcompose.LocalViewModel
@@ -27,10 +28,12 @@ class SurahScreen : Screen {
     override fun Content() {
 
         val viewModel = LocalViewModel.current
-        val surahList by viewModel.surahListState.collectAsState()
-        val verseList by viewModel.surahVersesState.collectAsState()
 
-        val loading by viewModel.loadingState.collectAsState()
+        val context =  LocalContext.current
+        val surahList by viewModel.getSurahList(context).collectAsState()
+        val verseList by viewModel.getSurahVerse().collectAsState()
+
+        val loading by viewModel.getLoadingState().collectAsState()
 
         if (loading) {
             Box(
@@ -48,7 +51,7 @@ class SurahScreen : Screen {
                 item {
                     SurahHeader(
                         modifier = Modifier,
-                        surah = surahList[viewModel.currentSurah.minus(1)]
+                        surah = surahList[viewModel.getCurrentSurahNumber().minus(1)]
                     )
 
                 }

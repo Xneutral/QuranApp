@@ -85,4 +85,6 @@ dependencies {
     //BottomNavItem
     implementation("androidx.compose.material:material:1.7.4")
 
+    implementation ("io.github.grizzi91:bouquet:1.1.2")
+
 }

@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashid.quranappcompose.R
 import com.rashid.quranappcompose.data.model.Surah
-import com.rashid.quranappcompose.data.model.Verse
 import com.rashid.quranappcompose.ui.theme.COLOR_PRIMARY_DARK
 import com.rashid.quranappcompose.ui.theme.COLOR_PRIMARY_LIGHT
 

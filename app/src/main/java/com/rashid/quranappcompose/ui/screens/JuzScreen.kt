@@ -22,6 +22,9 @@ import com.rashid.quranappcompose.ui.screens.components.QuranHeader
 import com.rashid.quranappcompose.ui.screens.components.QuranVerse
 import com.rashid.quranappcompose.ui.screens.components.SurahHeader
 import com.rashid.quranappcompose.ui.screens.components.SurahItem
+import com.rizzi.bouquet.HorizontalPDFReader
+import com.rizzi.bouquet.HorizontalPdfReaderState
+import com.rizzi.bouquet.ResourceType
 
 
 class JuzScreen : Screen {
@@ -30,35 +33,15 @@ class JuzScreen : Screen {
     override fun Content() {
 
         val viewModel = LocalViewModel.current
-        val juzVerseList by viewModel.juzVersesState.collectAsState()
 
-        val loading by viewModel.loadingState.collectAsState()
-
-        if (loading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-
-        } else {
-            LazyColumn(
-                modifier = Modifier
-            ) {
-                item {
-//                    SurahHeader(
-//                        modifier = Modifier,
-//                        surah = juzVerseList[viewModel.currentSurah.minus(1)]
-//                    )
-                }
-                items(juzVerseList) { verse ->
-                    QuranVerse(modifier = Modifier, verse)
-                }
-            }
-
-        }
+        HorizontalPDFReader(
+            state = HorizontalPdfReaderState(
+                resource = ResourceType.Remote(url = viewModel.getCurrentJuzUrl()),
+                isZoomEnable = true,
+                isAccessibleEnable = true
+            ),
+            modifier = Modifier.fillMaxSize()
+        )
 
     }
 

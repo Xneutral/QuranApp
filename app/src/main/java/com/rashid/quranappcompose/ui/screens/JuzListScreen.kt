@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -31,8 +32,7 @@ class JuzListScreen : Screen {
 
         val viewModel = LocalViewModel.current
 
-        val engJuzList = viewModel.quranicParasEng
-        val arabicJuzList = viewModel.quranicParasArabic
+        val juzList by viewModel.getAllJuzInfos(LocalContext.current).collectAsState()
 
         LazyColumn(
             modifier = Modifier
@@ -40,19 +40,15 @@ class JuzListScreen : Screen {
             item {
                 QuranHeader()
             }
-            items(engJuzList.size) { index ->
+            items(juzList.size) { index ->
                 val topPadding = if (index == 0) 8.dp else 0.dp
                 JuzItem(
                     modifier = Modifier
                         .padding(horizontal = 4.dp)
                         .padding(top = topPadding),
-                   index.plus(1),
-                    engJuzList[index],
-                    arabicJuzList[index]
-
-                ) { juzNo ->
-                    Log.d("TAG", "Content:surah no is $juzNo ")
-                    viewModel.currentJuz = juzNo
+                    juzList[index]
+                ) {  link ->
+                    viewModel.setCurrentJuzUrl(link)
                     navigator.push(JuzScreen())
                 }
             }

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rashid.quranappcompose.R
 import com.rashid.quranappcompose.data.model.JuzData
+import com.rashid.quranappcompose.data.model.JuzInfo
 import com.rashid.quranappcompose.data.model.Surah
 import com.rashid.quranappcompose.ui.theme.COLOR_PRIMARY_DARK
 
@@ -33,15 +34,13 @@ import com.rashid.quranappcompose.ui.theme.COLOR_PRIMARY_DARK
 @Composable
 fun JuzItem(
     modifier: Modifier = Modifier,
-    juzNo: Int,
-    engName : String,
-    arabicName : String,
-    onJuzItemClick: (juzNo :Int) -> Unit) {
+    juzInfo : JuzInfo,
+    onJuzItemClick: (juzUrl :String) -> Unit) {
 
     Column(
         modifier = Modifier
             .padding(vertical = 8.dp)
-            .clickable { onJuzItemClick(juzNo) }
+            .clickable { onJuzItemClick(juzInfo.pdfLink) }
     ) {
 
 
@@ -59,7 +58,7 @@ fun JuzItem(
                     contentDescription = null
                 )
                 EnglishText(
-                    text = "Para # ",
+                    text = "${juzInfo.juzNo}",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.align(Alignment.Center)
@@ -72,7 +71,7 @@ fun JuzItem(
             ) {
 
                 EnglishText(
-                    text = engName,
+                    text = juzInfo.en,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -83,8 +82,8 @@ fun JuzItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     EnglishText(
-                        text = "",
-                        fontSize = 14.sp,
+                        text = "${ juzInfo.totalVerses }",
+                        fontSize = 12.sp,
                         color = Color.Gray
                     )
 
@@ -100,8 +99,8 @@ fun JuzItem(
                     )
 
                     EnglishText(
-                        text = "",
-                        fontSize = 14.sp,
+                        text = "Verses",
+                        fontSize = 12.sp,
                         color = Color.Gray
                     )
                 }
@@ -109,8 +108,8 @@ fun JuzItem(
 
             ArabicText(
                 modifier = Modifier.weight(1f),
-                text = arabicName,
-                fontSize = 28.sp,
+                text = juzInfo.arab,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = COLOR_PRIMARY_DARK,
                 textAlign = TextAlign.End

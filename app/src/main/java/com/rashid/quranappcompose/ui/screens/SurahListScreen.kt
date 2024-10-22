@@ -9,9 +9,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.currentCompositeKeyHash
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -29,10 +31,13 @@ class SurahListScreen : Screen {
 
         val viewModel = LocalViewModel.current
 
-        val surahList by viewModel.surahListState.collectAsState()
+        val context = LocalContext.current
 
-        val loading by viewModel.loadingState.collectAsState()
+        val surahList by viewModel.getSurahList(context).collectAsState()
 
+        val loading by viewModel.getLoadingState().collectAsState()
+
+        Log.d("TAG", "Content: surah screen is recomposed $currentCompositeKeyHash ")
         if (loading) {
             Box(
                 modifier = Modifier
@@ -58,8 +63,8 @@ class SurahListScreen : Screen {
                         surahList[index]
                     ) { surahNo ->
                         Log.d("TAG", "Content:surah no is $surahNo ")
-                        viewModel.currentSurah = surahNo
-                        viewModel.getSurahVerses()
+                        viewModel.setCurrentSurahNumber(surahNo)
+                        viewModel.getSurahVerse()
                         navigator.push(SurahScreen())
                     }
                 }

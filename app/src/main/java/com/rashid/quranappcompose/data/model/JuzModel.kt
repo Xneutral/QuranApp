@@ -17,3 +17,16 @@ data class JuzData(
     val totalVerses: Int,
     val verses: List<Verse>
 )
+
+data class JuzInfo(
+    val juzNo : Int,
+    val arab : String,
+    val en : String,
+    val totalVerses: Int,
+    val pdfLink: String,
+)
+
+
+data class JuzInfoList(
+    val paras : List<JuzInfo>
+)
